@@ -14,11 +14,8 @@ class BottomNavgationBarController extends GetxController {
   void changeIndex(int index) {
     if (index == 1) {
       ();
-    } else if (index == 4) {
-      try {
-        // MyPageController controller = Get.find<MyPageController>(); //TODO:: 바텀네비 관련 설정.
-        // controller.getMedalController();
-      } catch (e) {
+    } else if (index == 2) {
+      try {} catch (e) {
         Logger().d(e);
       }
     }

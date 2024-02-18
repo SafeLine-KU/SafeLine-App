@@ -4,8 +4,8 @@ class ColorTheme {
   static const Color primaryColor = Color(0xFFFA4549);
 
   //Icon Color
-  static const Color iconActiveColor = Color(0xFF0AC2A1);
-  static const Color iconInActiveColor = Color.fromARGB(255, 142, 140, 134);
+  static const Color iconActiveColor = Color(0xFFFA4549);
+  static const Color iconInActiveColor = Color(0xFFC8CBD1);
 
   //Grey Color
   static const Color grey_F7F7F7 = Color(0xFFF7F7F7);

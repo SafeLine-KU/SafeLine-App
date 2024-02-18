@@ -1,5 +1,5 @@
 name: safeline_ku
-description: "A new Flutter project."
+description: Safe Line app
 
 version: 1.0.0+1
 
@@ -13,6 +13,7 @@ flutter:
     - assets/
     - assets/image/
     - assets/icon/
+    - assets/icon/navbar/
 
 dependencies:
   flutter:
