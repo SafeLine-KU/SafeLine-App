@@ -9,9 +9,9 @@ class MainViewPage extends StatelessWidget {
   const MainViewPage({super.key});
 
   static List<Widget> navBar = <Widget>[
-    const HomeViewPage(),
-    const HomeViewPage(),
-    const HomeViewPage(),
+    HomeViewPage(),
+    HomeViewPage(),
+    HomeViewPage(),
   ];
 
   @override
