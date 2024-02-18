@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 
 class ColorTheme {
   static const Color primaryColor = Color(0xFFFA4549);
+  static const Color backgroundColor = Color(0xFFFFFFFF);
+  static const Color secondaryColor = Color(0xFFFF8181);
 
   //Icon Color
   static const Color iconActiveColor = Color(0xFFFA4549);
-  static const Color iconInActiveColor = Color(0xFFC8CBD1);
+  static const Color iconInActiveColor = Color(0xC8CBD1);
 
   //Grey Color
   static const Color grey_F7F7F7 = Color(0xFFF7F7F7);

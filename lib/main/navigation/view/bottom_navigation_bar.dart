@@ -33,7 +33,7 @@ class BottomNavgationWidget extends StatelessWidget {
                       controller.changeIndex(index);
                     },
                     selectedItemColor: ColorTheme.iconActiveColor,
-                    unselectedItemColor: ColorTheme.iconInActiveColor,
+                    unselectedItemColor: ColorTheme.grey_8B8B8B,
                     elevation: 0,
                     unselectedLabelStyle: const TextStyle(fontSize: 11, fontWeight: FontWeight.w400),
                     selectedLabelStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
