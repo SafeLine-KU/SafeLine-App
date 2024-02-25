@@ -4,6 +4,7 @@ class ColorTheme {
   static const Color primaryColor = Color(0xFFFA4549);
   static const Color backgroundColor = Color(0xFFFFFFFF);
   static const Color secondaryColor = Color(0xFFFF8181);
+  static const Color thirdColor = Color.fromARGB(248, 253, 101, 74);
 
   //Icon Color
   static const Color iconActiveColor = Color(0xFFFA4549);

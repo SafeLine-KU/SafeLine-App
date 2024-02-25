@@ -24,7 +24,9 @@ class EducationViewPage extends StatelessWidget {
                   height: 100,
                   width: 250,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      controller.fetchQuizzes('wildfire');
+                    },
                     child: Text(
                       'Quiz Start',
                       style: TextStyle(

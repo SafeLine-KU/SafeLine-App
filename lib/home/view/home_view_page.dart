@@ -59,7 +59,7 @@ class _HomeViewPage extends State<HomeViewPage> {
     await _speechToText.listen(
       onResult: _onSpeechResult,
       listenFor: const Duration(seconds: 30),
-      localeId: "en_En",
+      localeId: "ko-KR",
       cancelOnError: false,
       partialResults: false,
       listenMode: ListenMode.confirmation,
