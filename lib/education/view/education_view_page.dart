@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:safeline_ku/common/util/common_color.dart';
 import 'package:safeline_ku/education/controller/education_controller.dart';
 
 class EducationViewPage extends StatelessWidget {
@@ -10,16 +12,36 @@ class EducationViewPage extends StatelessWidget {
   Widget build(BuildContext context) {
     EducationController controller = Get.put(EducationController());
 
-    return Obx(() => ListView.builder(
-          itemCount: controller.instructions.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              title: Text(controller.instructions[index]['instruction']),
-              leading: CircleAvatar(
-                backgroundImage: NetworkImage(controller.instructions[index]['image']),
-              ),
-            );
-          },
-        ));
+    return SafeArea(
+      child: Scaffold(
+        body: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  height: 100,
+                  width: 250,
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    child: Text(
+                      'Quiz Start',
+                      style: TextStyle(
+                        fontSize: 30,
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: ColorTheme.white,
+                      backgroundColor: const Color.fromARGB(255, 238, 105, 107),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
