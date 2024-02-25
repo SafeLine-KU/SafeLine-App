@@ -61,8 +61,7 @@ class MapViewPage extends StatelessWidget {
                 backgroundColor: ColorTheme.primaryColor, // 버튼의 배경색 설정
               ),
               onPressed: () {
-                mapController.fetchSafeZones(
-                    '37.5436783,127.0775993', 'earthquake');
+                mapController.fetchSafeZones();
               },
               child: Row(
                 children: [

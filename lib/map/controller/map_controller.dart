@@ -16,6 +16,7 @@ class MapController extends GetxController {
   void onInit() {
     super.onInit();
     dotenv.load(fileName: '.env');
+    fetchSafeZones();
   }
 
   void onMapCreated(GoogleMapController controller) {
@@ -24,10 +25,13 @@ class MapController extends GetxController {
 
   LatLng get center => _center;
 
-  Future<void> fetchSafeZones(String location, String type) async {
+  Future<void> fetchSafeZones() async {
     final String baseUrl =
         'https://d29cb15c-e309-44ed-9ea7-cb7577a0c6e5.mock.pstmn.io/safezone';
-    final Uri uri = Uri.parse('$baseUrl?location=$location&type=$type');
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    final Uri uri = Uri.parse(
+        '$baseUrl?location=${position.latitude},${position.longitude}&type=earthquake');
 
     try {
       final response = await http.get(uri);
@@ -133,7 +137,7 @@ class MapController extends GetxController {
         CameraUpdate.newCameraPosition(
           CameraPosition(
             target: nearestSafezoneLocation,
-            zoom: 17.0,
+            zoom: 18.0,
           ),
         ),
       );
@@ -154,7 +158,7 @@ class MapController extends GetxController {
         desiredAccuracy: LocationAccuracy.high);
     print('key: ${apiKey}');
     String url =
-        "https://maps.googleapis.com/maps/api/directions/json?origin=${position.latitude},${position.longitude}&destination=${destination.latitude},${destination.longitude}&mode=transit&departure_time=now&key=$apiKey";
+        "https://maps.googleapis.com/maps/api/directions/json?origin=${start.latitude},${start.longitude}&destination=${destination.latitude},${destination.longitude}&mode=transit&departure_time=now&key=$apiKey";
 
     try {
       final response = await http.get(Uri.parse(url));
