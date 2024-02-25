@@ -8,7 +8,7 @@ class GetXRouter {
   static final route = [
     GetPage(name: SplashViewPage.url, page: () => const SplashViewPage()),
     GetPage(name: MainViewPage.url, page: () => const MainViewPage()),
-    GetPage(name: HomeViewPage.url, page: () => HomeViewPage()),
+    //GetPage(name: HomeViewPage.url, page: () => HomeViewPage()),
     GetPage(name: EducationViewPage.url, page: () => const EducationViewPage()),
   ];
 }
