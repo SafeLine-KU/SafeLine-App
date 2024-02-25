@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:safeline_ku/common/util/common_color.dart';
+import 'package:safeline_ku/education/view/education_quiz_feedback_view_page.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:http/http.dart' as http;
@@ -116,7 +117,13 @@ class _EducationQuizViewPageState extends State<EducationQuizViewPage> {
           _feedbackMessage = responseData['assessment'];
         });
 
-        _showFeedbackBottomSheet();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => EducationQuizFeedbackViewPage(
+                feedbackMessage: _feedbackMessage),
+          ),
+        );
       } else {
         setState(() {
           _feedbackMessage = 'Failed to get feedback.';
@@ -127,21 +134,6 @@ class _EducationQuizViewPageState extends State<EducationQuizViewPage> {
         _feedbackMessage = 'Error: $e';
       });
     }
-  }
-
-  void _showFeedbackBottomSheet() {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return Container(
-          padding: EdgeInsets.all(16),
-          child: Text(
-            'Feedback: $_feedbackMessage',
-            style: TextStyle(fontSize: 18),
-          ),
-        );
-      },
-    );
   }
 
   @override
