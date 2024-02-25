@@ -1,13 +1,18 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:safeline_ku/common/util/common_color.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
+import 'package:http/http.dart' as http;
 
 class EducationQuizViewPage extends StatefulWidget {
+  final String imageId;
   final String imageUrl;
-  const EducationQuizViewPage({super.key, required this.imageUrl});
+  const EducationQuizViewPage(
+      {super.key, required this.imageId, required this.imageUrl});
 
   @override
   State<EducationQuizViewPage> createState() => _EducationQuizViewPageState();
@@ -19,6 +24,7 @@ class _EducationQuizViewPageState extends State<EducationQuizViewPage> {
   final SpeechToText _speechToText = SpeechToText();
   bool _speechEnabled = false;
   String _lastWords = "";
+  String? _feedbackMessage; //퀴즈 정답 후 피드백
 
   void listenForPermissions() async {
     final status = await Permission.microphone.status;
@@ -85,6 +91,57 @@ class _EducationQuizViewPageState extends State<EducationQuizViewPage> {
       _lastWords = "";
       _textController.text = "";
     });
+  }
+
+  Future<void> _submitAnswer() async {
+    final url =
+        'https://d29cb15c-e309-44ed-9ea7-cb7577a0c6e5.mock.pstmn.io/instruction/assessment';
+    final requestData = {
+      "id": widget.imageId,
+      "answer": _textController.text,
+    };
+
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(requestData),
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+        setState(() {
+          _feedbackMessage = responseData['assessment'];
+        });
+
+        _showFeedbackBottomSheet();
+      } else {
+        setState(() {
+          _feedbackMessage = 'Failed to get feedback.';
+        });
+      }
+    } catch (e) {
+      setState(() {
+        _feedbackMessage = 'Error: $e';
+      });
+    }
+  }
+
+  void _showFeedbackBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          padding: EdgeInsets.all(16),
+          child: Text(
+            'Feedback: $_feedbackMessage',
+            style: TextStyle(fontSize: 18),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -182,7 +239,9 @@ class _EducationQuizViewPageState extends State<EducationQuizViewPage> {
               height: 50,
               width: MediaQuery.of(context).size.width,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  _submitAnswer();
+                },
                 child: Text(
                   'Submit answer',
                   style: TextStyle(

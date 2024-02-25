@@ -3,12 +3,11 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:geolocator/geolocator.dart'; // 추가
 
 class MapController extends GetxController {
   late GoogleMapController mapController;
-
   final LatLng _center = const LatLng(37.544381, 127.076198);
-
   final markers = <Marker>[];
 
   @override
@@ -22,8 +21,9 @@ class MapController extends GetxController {
 
   LatLng get center => _center;
 
-  void fetchSafeZones(String location, String type) async {
-    final String baseUrl = 'https://d29cb15c-e309-44ed-9ea7-cb7577a0c6e5.mock.pstmn.io/safezone';
+  Future<void> fetchSafeZones(String location, String type) async {
+    final String baseUrl =
+        'https://d29cb15c-e309-44ed-9ea7-cb7577a0c6e5.mock.pstmn.io/safezone';
     final Uri uri = Uri.parse('$baseUrl?location=$location&type=$type');
 
     try {
@@ -72,5 +72,36 @@ class MapController extends GetxController {
       Get.snackbar('Error', 'Failed to fetch safezone data: $e');
     }
     update(); // Update markers
+  }
+
+  Future<void> getCurrentLocationAndShowOnMap() async {
+    try {
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+      LatLng currentLocation = LatLng(position.latitude, position.longitude);
+
+      // Clear previous markers and add new marker for current location
+      markers.clear();
+      markers.add(
+        Marker(
+          markerId: MarkerId('My Location'),
+          position: currentLocation,
+          icon:
+              BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
+        ),
+      );
+
+      // Move camera to current location
+      mapController.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: currentLocation,
+            zoom: 15.0,
+          ),
+        ),
+      );
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to get current location: $e');
+    }
   }
 }

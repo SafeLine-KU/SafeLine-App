@@ -27,7 +27,11 @@ class EducationController extends GetxController {
 
         if (quizList.isNotEmpty) {
           final imageUrl = quizList[0]['image']; // Get the first quiz image URL
-          Get.to(() => EducationQuizViewPage(imageUrl: imageUrl));
+          final imageId = quizList[0]['id'];
+          Get.to(() => EducationQuizViewPage(
+                imageUrl: imageUrl,
+                imageId: imageId,
+              ));
         } else {
           Get.snackbar('Error', 'No quiz data available');
         }

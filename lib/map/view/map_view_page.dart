@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:safeline_ku/common/global_widget/marker.dart';
+import 'package:safeline_ku/common/util/common_color.dart';
 import 'package:safeline_ku/map/controller/map_controller.dart';
 
 class MapViewPage extends StatelessWidget {
@@ -10,23 +11,61 @@ class MapViewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GetBuilder<MapController>(
-        builder: (controller) {
-          return GoogleMap(
-            onMapCreated: controller.onMapCreated,
-            initialCameraPosition: CameraPosition(
-              target: controller.center,
-              zoom: 12.0,
+      body: Stack(
+        children: [
+          GetBuilder<MapController>(
+            builder: (controller) {
+              return GoogleMap(
+                onMapCreated: controller.onMapCreated,
+                initialCameraPosition: CameraPosition(
+                  target: controller.center,
+                  zoom: 12.0,
+                ),
+                markers: Set.from(mapController.markers),
+                myLocationEnabled: true, // 실시간 현재 위치 표시
+                myLocationButtonEnabled: false,
+                mapToolbarEnabled: true,
+              );
+            },
+          ),
+          Positioned(
+            top: 50.0,
+            right: 16.0,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: ColorTheme.primaryColor, // 버튼의 배경색 설정
+              ),
+              onPressed: () {
+                mapController.fetchSafeZones(
+                    '37.5436783,127.0775993', 'earthquake');
+              },
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.home_filled,
+                    color: ColorTheme.white,
+                  ),
+                  Text(
+                    ' Shelter',
+                    style: TextStyle(color: ColorTheme.white),
+                  ),
+                ],
+              ),
             ),
-            markers: Set.from(mapController.markers),
-          );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          mapController.fetchSafeZones('37.5436783,127.0775993', 'earthquake');
-        },
-        child: Icon(Icons.refresh),
+          ),
+          Positioned(
+            top: 110.0,
+            right: 16.0,
+            child: FloatingActionButton(
+              foregroundColor: ColorTheme.white,
+              backgroundColor: ColorTheme.primaryColor,
+              onPressed: () {
+                mapController.getCurrentLocationAndShowOnMap();
+              },
+              child: Icon(Icons.my_location),
+            ),
+          ),
+        ],
       ),
     );
   }
