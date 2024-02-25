@@ -51,12 +51,10 @@ class _HomeViewPage extends State<HomeViewPage> {
     }
   }
 
-  /// This has to happen only once per app
   void _initSpeech() async {
     _speechEnabled = await _speechToText.initialize();
   }
 
-  /// Each time to start a speech recognition session
   void _startListening() async {
     await _speechToText.listen(
       onResult: _onSpeechResult,
@@ -69,17 +67,11 @@ class _HomeViewPage extends State<HomeViewPage> {
     setState(() {});
   }
 
-  /// Manually stop the active speech recognition session
-  /// Note that there are also timeouts that each platform enforces
-  /// and the SpeechToText plugin supports setting timeouts on the
-  /// listen method.
   void _stopListening() async {
     await _speechToText.stop();
     setState(() {});
   }
 
-  /// This is the callback that the SpeechToText plugin calls when
-  /// the platform returns recognized words.
   void _onSpeechResult(SpeechRecognitionResult result) {
     setState(() {
       _lastWords = "$_lastWords${result.recognizedWords} ";
@@ -90,42 +82,50 @@ class _HomeViewPage extends State<HomeViewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-      child: ListView(
-        shrinkWrap: true,
-        padding: const EdgeInsets.all(12),
-        children: [
-          Column(
-            children: [
-              IconButton(
-                onPressed: _speechToText.isNotListening
-                    ? _startListening
-                    : _stopListening,
-                icon: _speechToText.isNotListening
-                    ? SvgPicture.asset('assets/icon/voice_off.svg',
-                        width: 150,
-                        height: 150,
-                        color: ColorTheme.secondaryColor)
-                    : SvgPicture.asset('assets/icon/voice_on.svg',
-                        width: 150,
-                        height: 150,
-                        color: ColorTheme.secondaryColor),
-              ),
-              TextField(
-                controller: _textController,
-                minLines: 6,
-                maxLines: 10,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.grey.shade100,
+        body: Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/image/background.png'),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Center(
+        child: ListView(
+          shrinkWrap: true,
+          padding: const EdgeInsets.all(12),
+          children: [
+            Column(
+              children: [
+                IconButton(
+                  onPressed: _speechToText.isNotListening
+                      ? _startListening
+                      : _stopListening,
+                  icon: _speechToText.isNotListening
+                      ? SvgPicture.asset('assets/icon/voice_off.svg',
+                          width: 150,
+                          height: 150,
+                          color: ColorTheme.secondaryColor)
+                      : SvgPicture.asset('assets/icon/voice_on.svg',
+                          width: 150,
+                          height: 150,
+                          color: ColorTheme.secondaryColor),
                 ),
-              ),
-              const SizedBox(
-                width: 8,
-              ),
-            ],
-          ),
-        ],
+                TextField(
+                  controller: _textController,
+                  minLines: 6,
+                  maxLines: 10,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.grey.shade100,
+                  ),
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     ));
   }
