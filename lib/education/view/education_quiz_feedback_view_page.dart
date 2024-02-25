@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
+import 'package:safeline_ku/common/util/common_color.dart';
 
 class EducationQuizFeedbackViewPage extends StatelessWidget {
   final String? feedbackMessage;
@@ -25,7 +27,15 @@ class EducationQuizFeedbackViewPage extends StatelessWidget {
                   height: 200,
                 ),
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 20),
+              Text(
+                'Feedback',
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w800,
+                    color: ColorTheme.primaryColor),
+              ),
+              SizedBox(height: 10),
               Container(
                 width: 300,
                 padding: EdgeInsets.all(20.0),
@@ -43,7 +53,29 @@ class EducationQuizFeedbackViewPage extends StatelessWidget {
                 ),
                 child: Text(
                   '${feedbackMessage ?? ""}', // null 일 때를 대비하여 null 확인 및 처리
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                      color: ColorTheme.grey_333333),
+                ),
+              ),
+              SizedBox(height: 30),
+              Container(
+                width: 300,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Get.toNamed('/main');
+                  },
+                  child: Text(
+                    'Finish',
+                    style: TextStyle(
+                      fontSize: 30,
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: ColorTheme.white,
+                    backgroundColor: const Color.fromARGB(255, 238, 105, 107),
+                  ),
                 ),
               ),
             ],
