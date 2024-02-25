@@ -16,6 +16,7 @@ class MapViewPage extends StatelessWidget {
           GetBuilder<MapController>(
             builder: (controller) {
               return GoogleMap(
+                polylines: Set<Polyline>.of(mapController.polylines.values),
                 onMapCreated: controller.onMapCreated,
                 initialCameraPosition: CameraPosition(
                   target: controller.center,
@@ -30,6 +31,30 @@ class MapViewPage extends StatelessWidget {
           ),
           Positioned(
             top: 50.0,
+            right: 16.0,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: ColorTheme.primaryColor, // 버튼의 배경색 설정
+              ),
+              onPressed: () {
+                mapController.getCurrentLocationAndShowNearestSafezone();
+              },
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.location_pin,
+                    color: ColorTheme.white,
+                  ),
+                  Text(
+                    'Find Nearest Safezone',
+                    style: TextStyle(color: ColorTheme.white),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Positioned(
+            top: 100.0,
             right: 16.0,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -54,7 +79,7 @@ class MapViewPage extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 110.0,
+            top: 150.0,
             right: 16.0,
             child: FloatingActionButton(
               foregroundColor: ColorTheme.white,
