@@ -20,7 +20,7 @@ class MapViewPage extends StatelessWidget {
                 onMapCreated: controller.onMapCreated,
                 initialCameraPosition: CameraPosition(
                   target: controller.center,
-                  zoom: 12.0,
+                  zoom: 15.0,
                 ),
                 markers: Set.from(mapController.markers),
                 myLocationEnabled: true, // 실시간 현재 위치 표시

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:safeline_ku/common/util/common_color.dart';
@@ -94,33 +95,87 @@ class _HomeViewPage extends State<HomeViewPage> {
           shrinkWrap: true,
           padding: const EdgeInsets.all(12),
           children: [
-            Column(
+            Stack(
               children: [
-                IconButton(
-                  onPressed: _speechToText.isNotListening
-                      ? _startListening
-                      : _stopListening,
-                  icon: _speechToText.isNotListening
-                      ? SvgPicture.asset('assets/icon/voice_off.svg',
-                          width: 150,
-                          height: 150,
-                          color: ColorTheme.secondaryColor)
-                      : SvgPicture.asset('assets/icon/voice_on.svg',
-                          width: 150,
-                          height: 150,
-                          color: ColorTheme.secondaryColor),
-                ),
-                TextField(
-                  controller: _textController,
-                  minLines: 6,
-                  maxLines: 10,
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.grey.shade100,
-                  ),
-                ),
-                const SizedBox(
-                  width: 8,
+                // Positioned(
+                //   left: 75,
+                //   right: 75,
+                //   child: Image.asset(
+                //     'assets/image/circle.png',
+                //     width: 225,
+                //     height: 225,
+                //   ),
+                // ),
+                Column(
+                  children: [
+                    Text(
+                      'Click Icon',
+                      style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
+                          color: ColorTheme.primaryColor),
+                    ),
+                    IconButton(
+                      onPressed: _speechToText.isNotListening
+                          ? _startListening
+                          : _stopListening,
+                      icon: AnimatedSwitcher(
+                        duration: Duration(milliseconds: 1000), // 애니메이션 지속 시간
+                        switchInCurve: Curves.easeIn, // 애니메이션 곡선 설정
+                        switchOutCurve: Curves.easeOut,
+                        transitionBuilder: (child, animation) {
+                          return RotationTransition(
+                            turns: animation, // 크기 조절 애니메이션
+                            child: child,
+                          );
+                        },
+                        child: _speechToText.isNotListening
+                            ? Image.asset(
+                                'assets/image/voice_off.png',
+                                key: UniqueKey(),
+                                width: 200,
+                                height: 200,
+                              )
+                            : Image.asset(
+                                'assets/image/voice_on.png',
+                                key: UniqueKey(),
+                                width: 200,
+                                height: 200,
+                              ),
+                      ),
+                    ),
+                    TextField(
+                      controller: _textController,
+                      minLines: 6,
+                      maxLines: 10,
+                      decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.transparent,
+                          hintText:
+                              '\nstep1. 이름, 나이, 신체정보 등을 말해주세요.\nstep2. 현재 자신의 위치를 말해주세요.\nstep3. 주변 상황이 어떠한지 말해주세요.\nstep4. 안내사항에 따라 대처해주세요.',
+                          hintStyle: TextStyle(
+                            color: Colors.grey.shade600,
+                          )),
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    SizedBox(height: 50),
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: Text(
+                        'Requset',
+                        style: TextStyle(
+                          fontSize: 30,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: ColorTheme.white,
+                        backgroundColor:
+                            const Color.fromARGB(255, 238, 105, 107),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
