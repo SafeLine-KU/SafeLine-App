@@ -4,9 +4,9 @@ Solution to increase users' disaster literacy<br>
 <strong>SafeLine</strong>
 </p>
 
-# SafeLine-Server
+# SafeLine-App
 
-> This `README` is written in English, with a [Korean version(한국어)](#safeline-server-한국어-해설) below.
+> This `README` is written in English, with a [Korean version(한국어)](#safeline-app-한국어-해설) below.
 
 This repository contains the Client Application code for the SafeLine project. This document contains a brief description of the project and instructions for running it.
 
@@ -53,7 +53,7 @@ flutter run
 
 ---
 
-# SafeLine-Server 한국어 해설
+# SafeLine-App 한국어 해설
 
 이 레포지토리는 SafeLine 프로젝트의 클라이언트 애플리케이션 코드입니다.  
 본 문서는 프로젝트에 대한 간단한 설명과 실행에 관한 내용을 담고 있습니다.  
